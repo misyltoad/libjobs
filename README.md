@@ -13,7 +13,7 @@ A cross-platform, header-only compute-shader-styled job dispatching API written 
     * Shared Memory
       * Across a workgroup
     * (You already know the Global Invocation Count yourself, so you can capture it)
-* Execute a single function asynchonously
+* Execute a single function asynchronously
 * Easily wait for a single job or multiple set of jobs to complete
 * Fire and forget functions or dispatches
 * Jobs are lambda functions with capture support
