@@ -164,8 +164,8 @@ namespace libjobs {
     inline void wait() const noexcept { while(busy()) platform::yield(); }
   protected:
     template <size_t MaxJobCount> friend class JobRunner;
-    void newJob()      { m_counter.fetch_add(1, std::memory_order_acquire); }
-    void jobComplete() { m_counter.fetch_sub(1, std::memory_order_release); }
+    inline void newJob()      noexcept { m_counter.fetch_add(1, std::memory_order_acquire); }
+    inline void jobComplete() noexcept { m_counter.fetch_sub(1, std::memory_order_release); }
   private:
     std::atomic<uint32_t> m_counter = { 0u };
   };
