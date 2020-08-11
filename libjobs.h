@@ -105,12 +105,12 @@ namespace libjobs {
   template <typename T, size_t Capacity>
   class RingBuffer {
   public:
-    constexpr void push_back(const T& item) noexcept {
+    inline void push_back(const T& item) noexcept {
       while (!try_push_back(item))
         platform::yield();
     }
 
-    constexpr bool try_push_back(const T& item) noexcept {
+    inline bool try_push_back(const T& item) noexcept {
       std::unique_lock lock(m_mutex);
       if (full())
         return false;
@@ -120,7 +120,7 @@ namespace libjobs {
       return true;
     }
 
-    constexpr bool pop_front(T& item) noexcept {
+    inline bool pop_front(T& item) noexcept {
       std::unique_lock lock(m_mutex);
       if (empty())
         return false;
