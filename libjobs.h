@@ -69,6 +69,7 @@ namespace libjobs {
         case ThreadPriority::AboveNormal:
           policy = SCHED_FIFO;
           param.sched_priority = sched_get_priority_max(SCHED_FIFO) / 2;
+          break;
         default:
         case ThreadPriority::Normal:
           policy = SCHED_OTHER;
