@@ -160,7 +160,8 @@ namespace libjobs {
 
   class JobWatcher {
   public:
-    [[nodiscard]] inline bool busy() const noexcept { return m_counter.load() > 0; }
+    [[nodiscard]] 
+    inline bool busy() const noexcept { return m_counter.load() > 0; }
     inline void wait() const noexcept { while(busy()) platform::yield(); }
   protected:
     template <size_t MaxJobCount> friend class JobRunner;
