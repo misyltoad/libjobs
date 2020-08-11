@@ -57,7 +57,7 @@ int main(int argc, char** argv) {
     bool printedExample = false;
     libjobs::JobWatcher watcher;
     const uint32_t globalInvocationCount = 128;
-    runner.dispatch(watcher, [&printedExample, &waitingMutex, globalInvocationCount](libjobs::JobContext&& ctx) -> bool {
+    runner.dispatch(watcher, [&printedExample, &waitingMutex](libjobs::JobContext&& ctx) -> bool {
       std::unique_lock lock(waitingMutex);
       if (printedExample)
         return true;
@@ -68,7 +68,8 @@ int main(int argc, char** argv) {
       printf("globalInvocationIndex: %u\n", ctx.globalInvocationIndex);
       // You pass in the global invocation count (jobCount) yourself,
       // so we don't expose this in the context, but you can easily
-      // just capture it.
+      // just capture it, or take advantage if it is const of the
+      // implicit capture.
       printf("globalInvocationCount: %u\n", globalInvocationCount);
       printf("workgroupId:           %u\n", ctx.workgroupId);
       printf("sharedMemory:          %p\n", ctx.sharedMemory);
