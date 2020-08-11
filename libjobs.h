@@ -162,13 +162,12 @@ namespace libjobs {
   public:
     [[nodiscard]] inline bool busy() const noexcept { return m_counter.load() > 0; }
     inline void wait() const noexcept { while(busy()) platform::yield(); }
-  private:
+  protected:
     template <size_t MaxJobCount> friend class JobRunner;
-
-    std::atomic<uint32_t> m_counter = { 0u };
-
     void newJob()      { m_counter.fetch_add(1, std::memory_order_acquire); }
     void jobComplete() { m_counter.fetch_sub(1, std::memory_order_release); }
+  private:
+    std::atomic<uint32_t> m_counter = { 0u };
   };
 
   template <size_t MaxJobCount>
