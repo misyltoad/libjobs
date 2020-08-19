@@ -25,15 +25,15 @@
 
 namespace libjobs {
 
-  enum class ThreadPriority : int32_t {
-    Lowest      = -2,
-    BelowNormal = -1,
-    Normal      =  0,
-    AboveNormal =  1,
-    Highest     =  2
-  };
-
   namespace platform {
+    enum class ThreadPriority : int32_t {
+      Lowest      = -2,
+      BelowNormal = -1,
+      Normal      =  0,
+      AboveNormal =  1,
+      Highest     =  2
+    };
+
     inline void yield() noexcept {
       #if defined(_WIN32)
       YieldProcessor();
@@ -103,6 +103,7 @@ namespace libjobs {
       return std::thread::hardware_concurrency();
     }
   }
+  using platform::ThreadPriority;
 
   template <typename T, size_t Capacity>
   class RingBuffer {
