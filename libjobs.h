@@ -321,7 +321,8 @@ namespace libjobs {
       Terminate
     };
 
-    [[nodiscard]] inline WorkerState work() noexcept {
+    [[nodiscard]]
+    inline WorkerState work() noexcept {
       JobDesc desc;
 
       if (!m_queue.pop_front(desc))
