@@ -171,7 +171,7 @@ namespace libjobs {
     inline void newJob()      noexcept { m_counter.fetch_add(1, std::memory_order_acquire); }
     inline void jobComplete() noexcept { m_counter.fetch_sub(1, std::memory_order_release); }
   private:
-    std::atomic<uint32_t> m_counter = { 0u };
+    std::atomic<uint32_t> m_counter = { 0 };
   };
 
   template <size_t MaxJobCount>
