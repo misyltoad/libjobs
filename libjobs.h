@@ -185,7 +185,7 @@ namespace libjobs {
       uint32_t numThreads = std::min(platform::threadCount(), maxThreads);
 
       for (uint32_t i = 0; i < numThreads; i++) {
-        auto thread = std::thread([this, &mutex = m_wakeMutex, &condition = m_wakeCondition] {
+        auto thread = std::thread([this, &mutex = m_wakeMutex, &condition = m_wakeCondition]() noexcept {
           for (;;) {
             WorkerState state = work();
             if (state == WorkerState::Work) {
