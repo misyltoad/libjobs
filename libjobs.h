@@ -12,6 +12,7 @@
 #include <cstring>
 #include <immintrin.h>
 #include <functional>
+#include <memory>
 
 #include <cstdint>
 #ifdef _WIN32
@@ -279,6 +280,29 @@ namespace libjobs {
         if (work() != WorkerState::Work)
           platform::yield();
       }
+    }
+
+    inline void synchronise() noexcept {
+      std::atomic<uint32_t> counter = { 0 };
+      dispatch([&counter](JobContext&& ctx) {
+        counter++;
+        return true;
+      }, threadCount(), 1);
+
+      while (counter != threadCount())
+        platform::yield();
+    }
+
+    inline void barrier() noexcept {
+      auto counter = std::make_shared<std::atomic<uint32_t>>(0);
+      dispatch([counter, threadCount = threadCount()](JobContext&& ctx) {
+        ++*counter;
+
+        while (*counter != threadCount)
+          platform::yield();
+
+        return true;
+      }, threadCount(), 1);
     }
 
   private:
