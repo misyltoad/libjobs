@@ -274,7 +274,7 @@ namespace libjobs {
       dispatch(m_throwawayWatcher, function, jobCount, groupSize, sharedMemorySize);
     }
 
-    inline uint32_t threadCount() const { return uint32_t(m_threads.size()); }
+    inline uint32_t threadCount() const noexcept { return uint32_t(m_threads.size()); }
 
     inline void waitAndWork(JobWatcher& watcher) noexcept {
       while (watcher.busy()) {
