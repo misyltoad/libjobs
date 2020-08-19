@@ -159,7 +159,7 @@ namespace libjobs {
     constexpr bool isLastJobInGroup()  const noexcept { return localInvocationIndex == localInvocationCount - 1; }
   };
 
-  using JobFunction = std::function<bool(JobContext&&)  >;
+  using JobFunction = std::function<bool(JobContext&&)>;
 
   class JobWatcher {
   public:
